@@ -11,20 +11,32 @@ if (typeof __metadata !== "function") __metadata = function (k, v) {
 };
 /// <reference path="typings/angular2/angular2.d.ts" />
 var angular2_1 = require('angular2/angular2');
-// Annotation section
-var MyAppComponent = (function () {
-    function MyAppComponent() {
-        this.name = 'Shahzad Ali';
+var FriendsService = (function () {
+    function FriendsService() {
+        this.names = ["Alice", "Aarav", "Martín", "Shannon", "Ariana", "Kai"];
     }
-    MyAppComponent = __decorate([
+    return FriendsService;
+})();
+var DisplayComponent = (function () {
+    function DisplayComponent(friendsService) {
+        this.myName = "Shahzad Ali";
+        this.names = friendsService.names; //["Alice", "Aarav", "Martín", "Shannon", "Ariana", "Kai"];
+    }
+    DisplayComponent = __decorate([
         angular2_1.Component({
-            selector: 'my-app'
+            selector: 'display',
+            //injectables: [FriendsService]
+            injectables: [FriendsService]
         }),
         angular2_1.View({
-            template: '<h1>Hello {{ name }}</h1>'
+            templateUrl: "list.html",
+            directives: [
+                angular2_1.For,
+                angular2_1.If
+            ]
         }), 
-        __metadata('design:paramtypes', [])
-    ], MyAppComponent);
-    return MyAppComponent;
+        __metadata('design:paramtypes', [FriendsService])
+    ], DisplayComponent);
+    return DisplayComponent;
 })();
-angular2_1.bootstrap(MyAppComponent);
+angular2_1.bootstrap(DisplayComponent);
